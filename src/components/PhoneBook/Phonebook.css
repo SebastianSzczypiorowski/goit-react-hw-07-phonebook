@@ -1,0 +1,17 @@
+.phonebook-container,
+.contact-form,
+.contacts-filter {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.contact-form > input,
+.contacts-filter > input {
+    width: 200px;
+    height: 25px;
+    
+}
+
+.contact-form > button {
+    width: 90px;
+}
