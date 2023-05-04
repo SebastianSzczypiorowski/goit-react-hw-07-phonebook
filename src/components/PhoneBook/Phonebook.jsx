@@ -1,37 +1,29 @@
-import React, { Component } from 'react';
+import React from 'react';
 import ContactForm from '../ContactForm/ContactForm';
 import ContactList from '../ContactList/ContactList';
+import { useEffect } from 'react';
+import { fetchContacts } from 'components/redux/operations';
+import { useDispatch, useSelector } from 'react-redux';
+import { getError, getIsLoading } from 'components/redux/selectors';
 
-class Phonebook extends Component {
-  state = {
-    contacts: [],
-    filter: '',
-  };
+function Phonebook() {
+  const dispatch = useDispatch();
+  const isLoading = useSelector(getIsLoading);
+  const error = useSelector(getError);
 
-  componentDidMount() {
-    if (localStorage.getItem('contacts')) {
-      this.setState({
-        contacts: JSON.parse(localStorage.getItem('contacts')),
-      });
-    } else {
-      localStorage.setItem('contacts', JSON.stringify([]));
-    }
-  }
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
 
-  componentDidUpdate() {
-    localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
-  }
-
-  render() {
-    return (
-      <div className="phonebook-container">
-        <h1>Phonebook</h1>
-        <ContactForm />
-        <h1>Contacts</h1>
-        <ContactList />
-      </div>
-    );
-  }
+  return (
+    <div className="phonebook-container">
+      <h1>Phonebook</h1>
+      <ContactForm />
+      <h1>Contacts</h1>
+      {isLoading && !error && <b>Request in progress...</b>}
+      <ContactList />
+    </div>
+  );
 }
 
 export default Phonebook;

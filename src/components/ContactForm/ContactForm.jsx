@@ -1,31 +1,24 @@
 import '../PhoneBook/Phonebook.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { addContact } from 'components/redux/contactsSlice';
+import { useDispatch } from 'react-redux';
+import { addContact } from 'components/redux/operations';
 
 function ContactForm() {
-  const contacts = useSelector(state => state.contacts);
+  // const contacts = useSelector(state => state.contacts);
   const dispatch = useDispatch();
 
-  const handleSubmit = e => {
-    e.preventDefault();
-    // @ts-ignore
-    const nameInput = document.querySelector('#name').value;
-    // @ts-ignore
-    const numberInput = document.querySelector('#number').value;
-
-    if (contacts.some(contact => contact.name === nameInput)) {
-      alert(`${nameInput} is already present in the phonebook`);
-      return;
-    } else if (!nameInput || !numberInput) {
-      alert('Please fill in all fields');
-      return;
-    }
-    dispatch(
-      addContact({
-        name: nameInput,
-        number: numberInput,
-      })
-    );
+  const handleSubmit = event => {
+    event.preventDefault();
+    const form = event.target;
+    console.log(event.target);
+    dispatch(addContact(event.target.elements.name.value));
+    form.reset();
+    // if (contacts.some(contact => contact.name === nameInput)) {
+    //   alert(`${nameInput} is already present in the phonebook`);
+    //   return;
+    // } else if (!nameInput || !numberInput) {
+    //   alert('Please fill in all fields');
+    //   return;
+    // }
   };
 
   return (
@@ -48,7 +41,7 @@ function ContactForm() {
         title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
         required
       />
-      <button type="submit" onClick={handleSubmit}>
+      <button type="submit" onSubmit={handleSubmit}>
         Add contact
       </button>
     </form>
