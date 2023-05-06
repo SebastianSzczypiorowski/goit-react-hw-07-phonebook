@@ -10,8 +10,8 @@ function ContactForm() {
     event.preventDefault();
     const form = event.target;
     console.log(event.target);
-    dispatch(addContact(event.target.elements.name.value));
-    form.reset();
+    // dispatch(addContact(event.target.elements.name.value)); <--------------------------------- Tu koniec
+    // form.reset();
     // if (contacts.some(contact => contact.name === nameInput)) {
     //   alert(`${nameInput} is already present in the phonebook`);
     //   return;
