@@ -17,6 +17,7 @@ function ContactList() {
   );
 
   const handleFilterUpdate = e => {
+    e.preventDefault();
     dispatch(setFilters(e.target.value));
   };
   return (
@@ -36,8 +37,7 @@ function ContactList() {
         {contacts.map(contact => {
           return (
             <li key={contact.id}>
-              {contact.name}
-              {contact.number}
+              {contact.name} {contact.phone}
               <button
                 type="button"
                 name={contact.name}
