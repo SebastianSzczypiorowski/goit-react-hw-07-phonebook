@@ -1,19 +1,26 @@
 import '../PhoneBook/Phonebook.css';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from 'components/redux/operations';
+import { getContacts } from 'components/redux/selectors';
 
 function ContactForm() {
   // const contacts = useSelector(state => state.contacts)
   const dispatch = useDispatch();
-
+  const contacts = useSelector(getContacts);
   const handleSubmit = event => {
     event.preventDefault();
     const form = event.target;
     const name = event.target.elements.name.value;
     const phone = event.target.elements.phone.value;
-    console.log(name);
-    console.log(phone);
-    dispatch(addContact(name, phone));
+    if (contacts.some(contact => contact.name === name)) {
+      alert(`${name} is already present in the phonebook`);
+      return;
+    } else if (!name || !phone) {
+      alert('Please fill in all fields');
+      return;
+    }
+
+    dispatch(addContact({ name, phone }));
     form.reset();
   };
 
@@ -45,7 +52,7 @@ function ContactForm() {
       />
       <label htmlFor="number">Number</label>
       <input
-        id="number"
+        id="phone"
         type="tel"
         name="phone"
         pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
