@@ -2,9 +2,9 @@ import React from 'react';
 import ContactForm from '../ContactForm/ContactForm';
 import ContactList from '../ContactList/ContactList';
 import { useEffect } from 'react';
-import { fetchContacts } from 'components/redux/operations';
+import { fetchContacts } from 'components/redux/Phonebook/operations';
 import { useDispatch, useSelector } from 'react-redux';
-import { getError, getIsLoading } from 'components/redux/selectors';
+import { getError, getIsLoading } from 'components/redux/Phonebook/selectors';
 
 function Phonebook() {
   const dispatch = useDispatch();
